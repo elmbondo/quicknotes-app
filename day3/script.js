@@ -12,8 +12,7 @@ let notes = [
 // the only categories a note is allowed to have
 const validCategories = ["personal", "work", "study"];
 
-// makes text easy to compare: lower case, no spaces at the ends,
-// and only one space between words
+// makes text easy to compare: lower case, no spaces at the ends, and only one space between words
 function cleanText(text) {
   return text.trim().toLowerCase().replace(/\s+/g, " ");
 }
@@ -108,8 +107,7 @@ function addNote(text, category) {
 
 // ---------------- tests ----------------
 
-// I keep the real data here so I can empty the notes for some tests
-// and then put everything back
+// Keeping the real data here so I can empty the notes for some tests and then put everything back
 const originalNotes = notes;
 
 // searchNotes
