@@ -197,6 +197,16 @@ footer {
   padding: 16px;
 }
 
+/* the clear all button */
+#clear-all {
+  background-color: #8e0000;
+  margin-bottom: 12px;
+}
+
+#clear-all:hover {
+  background-color: #6b0000;
+}
+
 /* ---------- small screens ---------- */
 @media (max-width: 600px) {
   header h1 {

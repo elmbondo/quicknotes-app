@@ -6,6 +6,7 @@ const errorMessage = document.querySelector("#error-message");
 const searchInput = document.querySelector("#search-input");
 const list = document.querySelector("#notes-list");
 const count = document.querySelector("#note-count");
+const clearAllBtn = document.querySelector("#clear-all");
 
 // the name I save my notes under in the browser
 const STORAGE_KEY = "quicknotes";
@@ -133,7 +134,7 @@ form.addEventListener("submit", (event) => {
     return;
   }
 
-  errorMessage.textContent = ""; // all good, so clear the error
+  errorMessage.textContent = ""; // clear the error
   addNote(text, categorySelect.value);
   noteInput.value = "";
   noteInput.focus();
@@ -148,5 +149,17 @@ list.addEventListener("click", (event) => {
 
 // search as the user types
 searchInput.addEventListener("input", render);
+
+// asks first, then deletes every note
+clearAllBtn.addEventListener("click", () => {
+  if (notes.length === 0) {
+    return;
+  }
+  if (confirm("Delete all notes?")) {
+    notes = [];
+    saveNotes();
+    render();
+  }
+});
 
 render();
