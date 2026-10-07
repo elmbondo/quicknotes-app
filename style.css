@@ -1,0 +1,215 @@
+/* reset, so padding and borders don't change the size I set */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: "Segoe UI", Arial, sans-serif;
+  background-color: #f2f4f7;
+  color: #222;
+  line-height: 1.5;
+}
+
+/* ---------- header ---------- */
+header {
+  background-color: #7a1212;
+  color: white;
+  text-align: center;
+  padding: 28px 16px;
+}
+
+header h1 {
+  margin: 0 0 4px;
+}
+
+header p {
+  margin: 0;
+}
+
+/* ---------- main area ---------- */
+main {
+  max-width: 700px;
+  margin: 24px auto;
+  padding: 0 16px;
+}
+
+section {
+  background-color: white;
+  padding: 20px;
+  margin-bottom: 20px;
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* ---------- the form ---------- */
+#note-form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+#note-form label,
+label[for="search-input"] {
+  display: block;
+  width: 100%;
+  font-weight: bold;
+}
+
+#note-input {
+  flex: 1;
+  min-width: 180px;
+  padding: 10px;
+  border: 1px solid #bbb;
+  border-radius: 6px;
+  font-size: 1rem;
+}
+
+#note-category {
+  padding: 10px;
+  border: 1px solid #bbb;
+  border-radius: 6px;
+  font-size: 1rem;
+  background-color: white;
+}
+
+/* the red error text under the form */
+#error-message {
+  color: #c0141c;
+  margin: 8px 0 0;
+}
+
+/* ---------- search and count ---------- */
+#search-input {
+  width: 100%;
+  padding: 10px;
+  margin: 6px 0 12px;
+  border: 1px solid #bbb;
+  border-radius: 6px;
+  font-size: 1rem;
+}
+
+#note-count {
+  color: #555;
+}
+
+/* ---------- buttons ---------- */
+button {
+  background-color: #0ba184;
+  color: white;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 6px;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #088a70;
+}
+
+.delete-btn {
+  background-color: #8e0000;
+  padding: 6px 12px;
+  font-size: 0.85rem;
+}
+
+.delete-btn:hover {
+  background-color: #6b0000;
+}
+
+/* ---------- note cards ---------- */
+#notes-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.note-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  background-color: #fffdf3;
+  border: 1px solid #e4e0cc;
+  border-left: 5px solid #888;
+  border-radius: 8px;
+  padding: 12px 16px;
+  margin-bottom: 10px;
+}
+
+.note-text {
+  margin: 0 0 4px;
+  overflow-wrap: anywhere;
+}
+
+.note-meta {
+  margin: 0;
+  font-size: 0.85rem;
+  color: #666;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.category-label {
+  font-weight: bold;
+}
+
+/* a different colour for each category */
+.category-personal {
+  border-left-color: #0ba184;
+}
+
+.category-personal .category-label {
+  color: #0ba184;
+}
+
+.category-work {
+  border-left-color: #8e0000;
+}
+
+.category-work .category-label {
+  color: #8e0000;
+}
+
+.category-study {
+  border-left-color: #1f5fbf;
+}
+
+.category-study .category-label {
+  color: #1f5fbf;
+}
+
+/* the "no notes match" message */
+.empty-message {
+  color: #666;
+  font-style: italic;
+  padding: 8px 0;
+}
+
+/* ---------- footer ---------- */
+footer {
+  text-align: center;
+  color: #777;
+  padding: 16px;
+}
+
+/* ---------- small screens ---------- */
+@media (max-width: 600px) {
+  header h1 {
+    font-size: 1.6rem;
+  }
+
+  /* stack the form one thing under the other */
+  #note-form {
+    flex-direction: column;
+  }
+
+  .note-card {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
