@@ -3,11 +3,29 @@ const form = document.querySelector("#note-form");
 const noteInput = document.querySelector("#note-input");
 const categorySelect = document.querySelector("#note-category");
 const errorMessage = document.querySelector("#error-message");
+const searchInput = document.querySelector("#search-input");
 const list = document.querySelector("#notes-list");
 const count = document.querySelector("#note-count");
 
-// all the notes live in this array
-let notes = [];
+// the name I save my notes under in the browser
+const STORAGE_KEY = "quicknotes";
+
+// all the notes live in this array (loaded from the browser)
+let notes = loadNotes();
+
+// gets the saved notes, or an empty list if there are none
+function loadNotes() {
+  const saved = localStorage.getItem(STORAGE_KEY);
+  if (saved) {
+    return JSON.parse(saved);
+  }
+  return [];
+}
+
+// saves the notes in the browser
+function saveNotes() {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(notes));
+}
 
 // turns "personal" into "Personal"
 function capitalise(word) {
@@ -25,11 +43,25 @@ function updateCount() {
   }
 }
 
-// draws every note on the page
+// draws the notes on the page
 function render() {
   list.replaceChildren(); // empty the list first
 
-  notes.forEach((note) => {
+  // only keep the notes that match the search (ignoring upper/lower case)
+  const searchWord = searchInput.value.trim().toLowerCase();
+  const visibleNotes = notes.filter((note) =>
+    note.text.toLowerCase().includes(searchWord)
+  );
+
+  // there are notes, but none match the search
+  if (visibleNotes.length === 0 && notes.length > 0) {
+    const message = document.createElement("li");
+    message.classList.add("empty-message");
+    message.textContent = "No notes match your search.";
+    list.appendChild(message);
+  }
+
+  visibleNotes.forEach((note) => {
     const li = document.createElement("li");
     li.classList.add("note-card", `category-${note.category}`);
 
@@ -66,7 +98,7 @@ function render() {
   updateCount();
 }
 
-// makes a new note and adds it to the array
+// makes a new note, saves it and shows it
 function addNote(text, category) {
   const newNote = {
     id: Date.now(),
@@ -75,12 +107,14 @@ function addNote(text, category) {
     createdAt: new Date().toLocaleString(),
   };
   notes.push(newNote);
+  saveNotes();
   render();
 }
 
 // removes the note with this id
 function deleteNote(id) {
   notes = notes.filter((note) => note.id !== id);
+  saveNotes();
   render();
 }
 
@@ -99,7 +133,7 @@ form.addEventListener("submit", (event) => {
     return;
   }
 
-  errorMessage.textContent = ""; 
+  errorMessage.textContent = ""; // all good, so clear the error
   addNote(text, categorySelect.value);
   noteInput.value = "";
   noteInput.focus();
@@ -111,5 +145,8 @@ list.addEventListener("click", (event) => {
     deleteNote(Number(event.target.dataset.id));
   }
 });
+
+// search as the user types
+searchInput.addEventListener("input", render);
 
 render();
